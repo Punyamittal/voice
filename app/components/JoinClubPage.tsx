@@ -30,9 +30,9 @@ export default function JoinClubPage() {
 
   useEffect(() => {
     const checkFormStatus = async () => {
-      const res = await fetch("/api/form/status");
+      const res = await fetch("/.netlify/functions/form-status");
       const data = await res.json();
-      setFormStatus(data.status);
+      setFormStatus(data.isOpen ? "open" : "closed");
     };
     checkFormStatus();
   }, []);
@@ -40,10 +40,10 @@ export default function JoinClubPage() {
   useEffect(() => {
     const fetchQuestions = async () => {
       if (formData.department) {
-        const res = await fetch(`/api/form/questions?dept=${formData.department}`);
+        const res = await fetch(`/.netlify/functions/form-questions?dept=${formData.department}`);
         const data = await res.json();
         setQuestions(data.questions || []);
-        setDeptInfo({ name: data.department, description: data.description });
+        setDeptInfo({ name: formData.department, description: "" });
       }
     };
     fetchQuestions();
@@ -80,7 +80,7 @@ export default function JoinClubPage() {
       }
     }
     setMessage({ success: false, text: "Processing" });
-    const res = await fetch("/api/form/submit", {
+    const res = await fetch("/.netlify/functions/form-submit", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formData),
