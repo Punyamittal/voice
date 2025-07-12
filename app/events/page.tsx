@@ -10,6 +10,8 @@ import { Navbar, NavBody, NavItems, NavbarLogo, MobileNav, MobileNavHeader, Mobi
 import Image from "next/image";
 import Folder from '@/components/Folder';
 import { Badge } from "@/components/ui/badge";
+import '../../styles/flip-cards.css';
+import '../../styles/event-cards.css';
 
 const SPONSORS_DATA = [
   {
@@ -37,123 +39,6 @@ const SPONSORS_DATA = [
     tier: "Silver Sponsor"
   }
 ];
-
-<style jsx global>{`
-.clock-input {
-  display: flex;
-  position: relative;
-  width: 60px;
-  height: 60px;
-  --a: #0004, #fff4;
-  --b: var(--a), var(--a), var(--a);
-  --c: var(--b), var(--b), var(--b);
-  background: conic-gradient(
-      from -2deg,
-      #efefff88,
-      #00000088,
-      #efefff88,
-      #00000088,
-      #efefff88
-    ),
-    radial-gradient(var(--c), var(--c)),
-    radial-gradient(circle at 12% 12%, #efefff, #9999a4);
-  background-size: calc(100% + 8px) calc(100% + 8px);
-  background-position: -4px -4px;
-  border: 4px solid #0005;
-  border-radius: 50%;
-}
-.clock-input input {
-  display: none;
-  pointer-events: none;
-}
-.dial {
-  position: absolute;
-  width: 26px;
-  height: 4px;
-  border-radius: 99px;
-  background-color: #000b;
-  top: calc(50% - 2px);
-  left: calc(50% - 2px);
-  transform-origin: 2px 50%;
-  pointer-events: none;
-  transition: 0.15s;
-  animation: owo 0.15s;
-}
-@keyframes owo {
-  0% {
-    transform: rotate(-60deg);
-  }
-  to {
-    transform: rotate(0deg);
-  }
-}
-.clock-input label {
-  position: absolute;
-  width: 48px;
-  height: 48px;
-  cursor: pointer;
-}
-#v1:checked ~ #l2 {
-  z-index: 2;
-}
-#v1:checked ~ .dial {
-  transform: rotate(0deg);
-}
-#v2:checked ~ #l3 {
-  z-index: 2;
-}
-#v2:checked ~ .dial {
-  transform: rotate(60deg);
-  animation: none;
-}
-#v3:checked ~ #l4 {
-  z-index: 2;
-}
-#v3:checked ~ .dial {
-  transform: rotate(120deg);
-  animation: none;
-}
-#v4:checked ~ #l5 {
-  z-index: 2;
-}
-#v4:checked ~ .dial {
-  transform: rotate(180deg);
-  animation: none;
-}
-#v5:checked ~ #l6 {
-  z-index: 2;
-}
-#v5:checked ~ .dial {
-  transform: rotate(240deg);
-  animation: none;
-}
-#v6:checked ~ #l1 {
-  z-index: 2;
-}
-#v6:checked ~ .dial {
-  transform: rotate(300deg);
-  animation: none;
-}
-.notch {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 8px;
-  height: 1px;
-  background-color: #fffc;
-  transform: translate(-50%) rotate(calc((var(--n) - 1) * 60deg))
-    translateX(38px);
-  counter-reset: section;
-}
-.notch::before {
-  content: counter(section);
-  position: absolute;
-  counter-set: section var(--n);
-  color: #fffc;
-  transform: translate(12px, -50%) rotate(calc((var(--n) - 1) * -60deg));
-  font-size: 12px;
-}
-`}</style>
 
 const ClockInput = () => (
   <div className="clock-input">
@@ -282,30 +167,17 @@ const EventsPage = () => {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16">
             {events.map((event, index) => (
-              <Card
-                key={index}
-                className="bg-neutral-lightest border-neutral-light hover:shadow-lg transition-all duration-300 hover:border-accent-orange/30"
-              >
-                <CardContent className="p-6">
-                  <div className="flex items-center mb-4">
-                    <div className="bg-accent-orange p-2 rounded-full mr-3">
-                      <Calendar className="h-4 w-4 text-white" />
-                    </div>
-                    <div>
-                      <p className="text-sm text-accent-orange font-semibold">{event.date}</p>
-                      <p className="text-sm text-text-muted">{event.time}</p>
-                    </div>
-                  </div>
-                  <h3 className="text-xl font-semibold text-text-primary mb-3">{event.title}</h3>
-                  <p className="text-text-secondary">{event.description}</p>
-                  <Button className="mt-4 w-full bg-accent-warm hover:bg-accent-warm/90 text-white rounded-full">
-                    Register Now
-                  </Button>
-                  <ClockInput />
-                </CardContent>
-              </Card>
+              <div key={index} className="card">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M20 5H4V19L13.2923 9.70649C13.6828 9.31595 14.3159 9.31591 14.7065 9.70641L20 15.0104V5ZM2 3.9934C2 3.44476 2.45531 3 2.9918 3H21.0082C21.556 3 22 3.44495 22 3.9934V20.0066C22 20.5552 21.5447 21 21.0082 21H2.9918C2.44405 21 2 20.5551 2 20.0066V3.9934ZM8 11C6.89543 11 6 10.1046 6 9C6 7.89543 6.89543 7 8 7C9.10457 7 10 7.89543 10 9C10 10.1046 9.10457 11 8 11Z"></path>
+                </svg>
+                <div className="card__content">
+                  <p className="card__title">{event.title}</p>
+                  <p className="card__description">{event.description}</p>
+                </div>
+              </div>
             ))}
           </div>
         </div>
@@ -325,9 +197,8 @@ const EventsPage = () => {
           >
             Past Events
           </ScrollFloat>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 justify-items-center mt-32">
-            {[
-              {
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-2 md:gap-3 justify-items-center mt-32">
+            {[{
                 title: "Radio Workshop 2023",
                 date: "December 15, 2023",
                 description: "A comprehensive workshop on radio broadcasting techniques and equipment handling.",
@@ -342,41 +213,57 @@ const EventsPage = () => {
               {
                 title: "Podcast Masterclass",
                 date: "August 5, 2023",
-                description: "Learn the art of podcasting from industry professionals.",
-                highlights: "Hands-on training, Equipment demo"
+                description: "Learn podcasting fundamentals from industry professionals.",
+                highlights: "Audio editing, Content strategy"
+              },
+              {
+                title: "Open Mic Night",
+                date: "July 12, 2023",
+                description: "Students showcase their talents in a supportive environment.",
+                highlights: "50+ performers, Live audience"
+              },
+              {
+                title: "RJ Battle Championship",
+                date: "June 25, 2023",
+                description: "Competition to find VIT's next radio star with exciting prizes.",
+                highlights: "25 contestants, 3 winners"
+              },
+              {
+                title: "Music Festival",
+                date: "May 18, 2023",
+                description: "A day filled with live music performances and entertainment.",
+                highlights: "10 bands, 500+ attendees"
+              },
+              {
+                title: "Tech Talk Series",
+                date: "April 8, 2023",
+                description: "Educational sessions on broadcasting technology and trends.",
+                highlights: "Expert speakers, Q&A sessions"
+              },
+              {
+                title: "Cultural Night",
+                date: "March 22, 2023",
+                description: "Celebrating diversity through music, dance, and cultural performances.",
+                highlights: "Multi-cultural, Traditional arts"
+              },
+              {
+                title: "Alumni Meet",
+                date: "February 14, 2023",
+                description: "Reconnecting with Voice IT alumni and networking opportunities.",
+                highlights: "50+ alumni, Career guidance"
               }
             ].map((event, index) => (
-              <div key={index} className="flex flex-col items-center group">
-                <div style={{ height: '300px', position: 'relative' }}>
-                  <Folder 
-                    size={3} 
-                    color="#FF6B00" 
-                    className="custom-folder"
-                    items={index === 0 ? [
-                      <Image key="magic1" src="/team/magic1.jpg" alt="Magic 1" width={100} height={100} className="w-full h-full object-cover rounded-lg" />,
-                      <Image key="magic2" src="/team/magic3.jpg" alt="Magic 2" width={100} height={100} className="w-full h-full object-cover rounded-lg" />,
-                      <Image key="magic3" src="/team/magic2.jpg" alt="Magic 3" width={100} height={100} className="w-full h-full object-cover rounded-lg" />
-                    ] : index === 1 ? [
-                      <Image key="dare1" src="/team/dare1.jpg" alt="Dare 1" width={100} height={100} className="w-full h-full object-cover rounded-lg" />,
-                      <Image key="dare2" src="/team/dare3.jpg" alt="Dare 2" width={100} height={100} className="w-full h-full object-cover rounded-lg" />,
-                      <Image key="dare3" src="/team/dare2.jpg" alt="Dare 3" width={100} height={100} className="w-full h-full object-cover rounded-lg" />
-                    ] : [
-                      <Image key="exit1" src="/team/exit1.jpg" alt="Exit 1" width={100} height={100} className="w-full h-full object-cover rounded-lg" />,
-                      <Image key="exit2" src="/team/exit3.jpg" alt="Exit 2" width={100} height={100} className="w-full h-full object-cover rounded-lg" />,
-                      <Image key="exit3" src="/team/exit2.jpg" alt="Exit 3" width={100} height={100} className="w-full h-full object-cover rounded-lg" />
-                    ]}
-                  />
-                </div>
-                <div className="mt-0.1 text-center transform transition-all duration-300 group-hover:scale-105">
-                  <div className="relative inline-block">
-                    <h3 className="text-3xl font-extrabold tracking-tight bg-gradient-to-r from-accent-orange via-accent-warm to-accent-orange bg-clip-text text-transparent bg-size-200 animate-gradient">
-                      {index === 0 ? "Magic Show" : index === 1 ? "Dare Dash 2.0" : "Emergency Exit 2.0"}
-                    </h3>
-                    <div className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-accent-orange via-accent-warm to-accent-orange transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-full"></div>
+              <div key={index} className="flip-card">
+                <div className="flip-card-inner">
+                  <div className="flip-card-front">
+                    <p className="title">{event.title}</p>
+                    <p>{event.date}</p>
                   </div>
-                  <p className="mt-4 px-6 py-2 bg-accent-orange/10 rounded-full backdrop-blur-sm text-sm text-accent-orange font-medium">
-                    {index === 0 ? "Experience the Magic" : index === 1 ? "Take the Challenge" : "Find Your Way"}
-                  </p>
+                  <div className="flip-card-back">
+                    <p className="title">{event.title}</p>
+                    <p>{event.description}</p>
+                    <p className="mt-2 text-sm">{event.highlights}</p>
+                  </div>
                 </div>
               </div>
             ))}
@@ -430,47 +317,45 @@ const EventsPage = () => {
             </p>
           </div>
 
-          {/* Sponsors Cards Box */}
-          <div className="mx-auto max-w-5xl bg-white/90 dark:bg-neutral-900/80 rounded-3xl shadow-2xl p-10 md:p-14 flex flex-col items-center">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 justify-center items-stretch w-full">
-              {SPONSORS_DATA.map((sponsor, index) => (
-                <Card
-                  key={index}
-                  className="bg-gradient-to-br from-orange-50 via-white to-orange-100 border-accent-orange hover:shadow-2xl transition-all duration-300 hover:border-accent-orange/70 flex flex-col h-full min-h-[320px] justify-stretch items-stretch transform-gpu hover:scale-105 opacity-0 animate-fade-in-up"
-                  style={{ animationDelay: `${index * 0.12 + 0.1}s`, animationFillMode: 'forwards' }}
-                >
-                  <CardContent className="flex flex-col h-full p-8 items-center justify-start">
-                    <div className="w-20 h-20 mx-auto mb-4 bg-accent-orange/10 rounded-full flex items-center justify-center shadow-md">
-                      <Image
-                        src={sponsor.logo}
-                        alt={sponsor.name + ' logo'}
-                        aria-label={sponsor.name + ' logo'}
-                        width={60}
-                        height={60}
-                        className="rounded-lg"
-                      />
-                    </div>
-                    <h3 className="text-xl font-semibold text-text-primary mb-2 text-center drop-shadow-sm">{sponsor.name}</h3>
-                    <p className="text-text-secondary text-sm mb-3 text-center">{sponsor.description}</p>
-                    <div className="mt-auto w-full flex justify-center">
-                      <Badge className="bg-gradient-to-r from-accent-orange to-accent-warm text-white border-0 px-4 py-2 text-base font-bold shadow-md rounded-full">
-                        {sponsor.tier}
-                      </Badge>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-              {/* Add placeholder cards if less than 3 sponsors */}
-              {Array.from({ length: Math.max(0, 3 - SPONSORS_DATA.length) }).map((_, idx) => (
-                <Card
-                  key={`placeholder-${idx}`}
-                  className="bg-neutral-lightest border-dashed border-2 border-neutral-200 min-h-[320px] flex flex-col justify-center items-center opacity-0"
-                  aria-hidden="true"
-                >
-                  <CardContent className="p-6" />
-                </Card>
-              ))}
-            </div>
+          {/* Sponsors Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 justify-items-center">
+            {[
+              {
+                name: "TechCorp Industries",
+                description: "Leading technology solutions provider supporting student innovation and creativity.",
+                tier: "Platinum Sponsor",
+                logo: "/placeholder-logo.png"
+              },
+              {
+                name: "MediaFlow Studios",
+                description: "Professional audio and broadcasting equipment for the next generation of content creators.",
+                tier: "Gold Sponsor",
+                logo: "/placeholder-logo.png"
+              },
+              {
+                name: "Campus Connect",
+                description: "Connecting students with industry opportunities and professional development resources.",
+                tier: "Silver Sponsor",
+                logo: "/placeholder-logo.png"
+              }
+            ].map((sponsor, index) => (
+              <div key={index} className="sponsor-card">
+                <div className="sponsor-card__logo">
+                  <Image
+                    src={sponsor.logo}
+                    alt={sponsor.name + ' logo'}
+                    width={80}
+                    height={80}
+                    className="rounded-lg"
+                  />
+                </div>
+                <div className="sponsor-card__content">
+                  <h3 className="sponsor-card__title">{sponsor.name}</h3>
+                  <p className="sponsor-card__description">{sponsor.description}</p>
+                  <div className="sponsor-card__tier">{sponsor.tier}</div>
+                </div>
+              </div>
+            ))}
           </div>
 
           <div className="mt-12 text-center">
@@ -482,15 +367,6 @@ const EventsPage = () => {
             </p>
           </div>
         </div>
-        <style jsx>{`
-          @keyframes fade-in-up {
-            0% { opacity: 0; transform: translateY(40px); }
-            100% { opacity: 1; transform: translateY(0); }
-          }
-          .animate-fade-in-up {
-            animation: fade-in-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
-          }
-        `}</style>
       </section>
     </div>
   );

@@ -1,3 +1,4 @@
+
 "use client"
 
 import { useState, useEffect, useRef } from "react"
@@ -400,9 +401,9 @@ export default function VoiceITWebsite() {
                 </ScrollFloat>
                 {/* 3D Radio Model */}
                 <div className="flex justify-center items-center">
-                  <div className="w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 max-w-full max-h-[60vw] min-w-0 min-h-0">
+                  <div className="w-[28rem] h-[28rem] sm:w-[32rem] sm:h-[32rem] md:w-[36rem] md:h-[36rem] lg:w-[40rem] lg:h-[40rem] max-w-full max-h-[60vw] min-w-0 min-h-0">
                     <Radio3D
-                      size={300}
+                      size={350}
                       rotationSpeed={0.01}
                       enableRotation={true}
                       className="w-full h-full"

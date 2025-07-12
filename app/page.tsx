@@ -1,12 +1,12 @@
+
 "use client"
+
 import { useState, useEffect, useRef } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Badge } from "@/components/ui/badge"
-import ScrollVelocity from '@/components/ScrollVelocity'
-
 import {
   Mic,
   Radio,
@@ -33,10 +33,13 @@ import { AudioPlayer } from '@/components/AudioPlayer'
 import Image from "next/image"
 import TiltedCard from '../components/TiltedCard'
 import { Carousel, Card as AppleCard } from "@/components/ui/apple-cards-carousel"
-import Folder from '@/components/Folder'
 import { EvervaultCard, Icon } from "@/components/ui/evervault-card"
-import TypewriterEffect from '@/components/TypewriterEffect'; // Import the new TypewriterEffect component
+import TypewriterEffect from '@/components/TypewriterEffect';
 import Aurora from '@/components/ui/aurora';
+import Particles from '@/components/ui/Particles';
+import Radio3D from '@/components/ui/Radio3D';
+import ScrollVelocity from '@/components/ui/ScrollVelocity';
+  
 export default function VoiceITWebsite() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [activeSection, setActiveSection] = useState("home")
@@ -208,328 +211,437 @@ export default function VoiceITWebsite() {
     setCursorPosition({ x, y });
   };
 
-  // DEBUG: Render ScrollVelocity at the very top
   return (
-    <>
-      <ScrollVelocity
-        texts={[
-          "Where voices come alive and stories find their rhythm.\n"
-        ]}
-        velocity={40}
-        className="text-2xl text-accent-orange min-h-[3rem] font-bold bg-yellow-200 border-4 border-red-500 z-50"
-      />
-      <ScrollVelocity
-        texts={[
-          "Join VIT Chennai's premier radio community."
-        ]}
-        velocity={40}
-        className="text-2xl text-accent-orange min-h-[3rem] font-bold bg-yellow-200 border-4 border-red-500 z-50"
-      />
-      <div className="min-h-screen relative">
-        {/* Background Music Player */}
-        <div className="fixed bottom-4 right-4 z-50">
-          <AudioPlayer 
-            audioUrl="/radiom.mp3" 
-            title="Background Music"
-            className="bg-primary-bg/80 backdrop-blur-md p-2 rounded-lg shadow-lg"
-          />
-        </div>
-
-        {/* Navigation */}
-        <nav className="fixed top-0 w-full bg-primary-bg/80 backdrop-blur-md border-b border-neutral-light z-50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-between items-center h-16">
-              <div className="flex items-center space-x-2">
-                <div className="bg-accent-orange p-2 rounded-full">
-                  <Mic className="h-6 w-6 text-white" />
-                </div>
-                <div ref={navRef} style={{ position: 'relative' }}>
-                  <VariableProximity
-                    label="Voice IT"
-                    className="text-4xl font-bold text-text-primary"
-                    fromFontVariationSettings="'wght' 400, 'opsz' 9"
-                    toFontVariationSettings="'wght' 1000, 'opsz' 40"
-                    containerRef={navRef as React.RefObject<HTMLElement>}
-                    radius={100}
-                    falloff="linear"
-                  />
-                </div>
-              </div>
-
-              {/* Desktop Navigation */}
-              <div className="hidden md:flex space-x-8">
-                {["home", "about", "team"].map((section) => (
-                  <button
-                    key={section}
-                    onClick={() => scrollToSection(section)}
-                    className={`capitalize transition-colors ${
-                      activeSection === section
-                        ? "text-accent-orange font-semibold"
-                        : "text-text-secondary hover:text-accent-orange"
-                    }`}
-                  >
-                    {section}
-                  </button>
-                ))}
-                <a
-                  href="/recruitment"
-                  className={`capitalize transition-colors ${
-                    activeSection === "recruitment"
-                      ? "text-accent-orange font-semibold"
-                      : "text-text-secondary hover:text-accent-orange"
-                  }`}
-                >
-                  Recruitment
-                </a>
-                <a
-                  href="/podcasts"
-                  className={`capitalize transition-colors ${
-                    activeSection === "podcasts"
-                      ? "text-accent-orange font-semibold"
-                      : "text-text-secondary hover:text-accent-orange"
-                  }`}
-                >
-                  Podcasts
-                </a>
-                <a
-                  href="/events"
-                  className={`capitalize transition-colors ${
-                    activeSection === "events"
-                      ? "text-accent-orange font-semibold"
-                      : "text-text-secondary hover:text-accent-orange"
-                  }`}
-                >
-                  Events
-                </a>
-              </div>
-
-              {/* Mobile menu button */}
-              <div className="md:hidden">
-                <button
-                  onClick={() => setIsMenuOpen(!isMenuOpen)}
-                  className="text-text-secondary hover:text-accent-orange"
-                >
-                  {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {/* Mobile Navigation */}
-          {isMenuOpen && (
-            <div className="md:hidden bg-primary-bg border-t border-neutral-light">
-              <div className="px-2 pt-2 pb-3 space-y-1">
-                {["home", "about", "team"].map((section) => (
-                  <button
-                    key={section}
-                    onClick={() => scrollToSection(section)}
-                    className="block px-3 py-2 text-base font-medium text-text-secondary hover:text-accent-orange capitalize w-full text-left"
-                  >
-                    {section}
-                  </button>
-                ))}
-                <a
-                  href="/recruitment"
-                  className="block px-3 py-2 text-base font-medium text-text-secondary hover:text-accent-orange capitalize w-full text-left"
-                >
-                  Recruitment
-                </a>
-                <a
-                  href="/podcasts"
-                  className="block px-3 py-2 text-base font-medium text-text-secondary hover:text-accent-orange capitalize w-full text-left"
-                >
-                  Podcasts
-                </a>
-                <a
-                  href="/events"
-                  className="block px-3 py-2 text-base font-medium text-text-secondary hover:text-accent-orange capitalize w-full text-left"
-                >
-                  Events
-                </a>
-              </div>
-            </div>
-          )}
-        </nav>
-
-        {/* Hero Section */}
-        <section
-  id="home"
-  className="pt-16 min-h-screen flex items-center relative"
->
-  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-    <div className="grid lg:grid-cols-2 gap-12 items-center">
-      <div className="space-y-8">
-        <div className="space-y-2">
-        
-          <TypewriterEffect
-            words={["Voice IT", "वॉइस आईटी", "വോയ്സ് ഐടി", "వాయిస్ ఐటి", "வாய்ஸ் ஐடி", "ವಾಯ್ಸ್ ಐಟಿ"]}
-            className="text-7xl font-bold text-accent-orange"
-          />
-
-          <ScrollFloat
-            animationDuration={1}
-            ease="back.inOut(2)"
-            scrollStart="center bottom+=50%"
-            scrollEnd="bottom bottom-=40%"
-            stagger={0.03}
-            containerClassName="text-6xl font-bold text-text-primary"
-            scrollContainerRef={scrollContainerRef}
-          >
-            
-            <TypewriterEffect
-              words={["Voice IT", "वॉइस आईटी", "வாய்ஸ் ஐடி", "వాయిస్ ఐటి", "വോയ്സ് ഐടി"]}
-              className="text-6xl font-bold text-text-primary"
-            />
-          </ScrollFloat>
-
-          {/* 👇 NEW ScrollVelocity Component */}
-          <ScrollVelocity
-            texts={[
-              "Where voices come alive and stories find their rhythm. Join VIT Chennai's premier radio community."
-            ]}
-            velocity={40}
-            className="text-2xl text-accent-orange min-h-[3rem] font-bold"
-          />
-        </div>
-
-        <div className="flex flex-col sm:flex-row gap-4">
-          <Button
-            size="md"
-            className="bg-accent-orange hover:bg-accent-orange/90 text-white px-8 py-3 rounded-full font-semibold transition-all hover:shadow-lg hover:shadow-accent-orange/25"
-            onClick={() => window.location.href = "/recruitment"}
-          >
-            Join the Club
-          </Button>
-          <Button
-            variant="outline"
-            size="lg"
-            className="border-accent-warm text-accent-warm hover:bg-accent-warm hover:text-white px-8 py-3 rounded-full font-semibold transition-all"
-            onClick={() => scrollToSection("live")}
-          >
-            <Play className="w-4 h-4 mr-2" />
-            Listen Live
-          </Button>
-        </div>
+    <div className="min-h-screen relative bg-primary-bg/80 backdrop-blur-sm">
+      {/* Aurora Background */}
+      <div className="fixed left-0 top-0 w-full h-[70vh] pointer-events-none z-[-1]">
+        <Aurora
+          colorStops={["#FF6B00", "#FFFFFF", "#FF6B00"]}
+          blend={0.5}
+          amplitude={1.0}
+          speed={0.5}
+        />
+      </div>
+      {/* Background Music Player */}
+      <div className="fixed bottom-4 right-4 z-50">
+        <AudioPlayer 
+          audioUrl="/radiom.mp3" 
+          title="Background Music"
+          className="bg-primary-bg/80 backdrop-blur-md p-2 rounded-lg shadow-lg"
+        />
       </div>
 
-      <div className="relative">
-        <div className="relative bg-gradient-to-br from-accent-orange/10 to-accent-warm/10 rounded-3xl p-8 backdrop-blur-sm border border-accent-orange">
-          <div className="flex items-center justify-center space-x-4 mb-6">
-            <div className="w-4 h-4 bg-red-500 rounded-full animate-pulse"></div>
-            <span className="text-text-secondary font-medium">ON AIR</span>
-          </div>
-          <div className="flex items-center justify-center mb-8">
-            <div className="bg-accent-orange p-6 rounded-full">
-              <Radio className="h-12 w-12 text-white" />
-            </div>
-          </div>
-          <div className="h-20 flex justify-center space-x-2 mb-4">
-            {barHeights.map((height, i) => (
-              <div
-                key={i}
-                className="w-2 bg-accent-orange rounded-full transition-all duration-500"
-                style={{
-                  height: `${height}px`,
-                  marginTop: 'auto'
-                }}
-              ></div>
-            ))}
-          </div>
-          <p className="text-center text-text-secondary">Broadcasting creativity across campus</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-        {/* Team Section */}
-        <section id="team" className="py-20 bg-primary-bg/80 backdrop-blur-sm relative overflow-hidden">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <ScrollFloat
-                animationDuration={1}
-                ease="back.inOut(2)"
-                scrollStart="center bottom+=50%"
-                scrollEnd="bottom bottom-=40%"
-                stagger={0.03}
-                containerClassName="text-4xl font-bold text-text-primary"
-                scrollContainerRef={scrollContainerRef}
-              >
-                Meet Our Team
-              </ScrollFloat>
-              <p className="text-xl text-text-secondary mt-4">
+      {/* Navigation */}
+      <nav className="fixed top-0 w-full bg-primary-bg/80 backdrop-blur-md border-b border-neutral-light z-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            <div className="flex items-center space-x-2">
+              <div className="bg-accent-orange p-2 rounded-full">
+                <Mic className="h-6 w-6 text-white" />
+              </div>
+              <div ref={navRef} style={{ position: 'relative' }}>
                 <VariableProximity
-                  label="The voices behind Voice IT who make the magic happen"
-                  className="text-xl text-text-secondary"
+                  label="Voice IT"
+                  className="text-4xl font-bold text-text-primary"
                   fromFontVariationSettings="'wght' 400, 'opsz' 9"
                   toFontVariationSettings="'wght' 1000, 'opsz' 40"
-                  containerRef={teamTextRef as React.RefObject<HTMLElement>}
+                  containerRef={navRef as React.RefObject<HTMLElement>}
                   radius={100}
                   falloff="linear"
                 />
-              </p>
+              </div>
             </div>
 
-            <div className="w-full h-full py-20">
-              <Carousel items={teamMembers.map((member, index) => (
-                <div key={member.image} className="px-2">
-                  <TiltedCard
-                    imageSrc={member.image}
-                    altText="Team Member"
-                    containerHeight="400px"
-                    containerWidth="300px"
-                    imageHeight="400px"
-                    imageWidth="300px"
-                    displayOverlayContent={false}
-                    showTooltip={false}
-                    scaleOnHover={1.05}
-                    rotateAmplitude={10}
-                    showMobileWarning={false}
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex space-x-8">
+              {["home", "about", "team"].map((section) => (
+                <button
+                  key={section}
+                  onClick={() => scrollToSection(section)}
+                  className={`capitalize transition-colors ${
+                    activeSection === section
+                      ? "text-accent-orange font-semibold"
+                      : "text-text-secondary hover:text-accent-orange"
+                  }`}
+                >
+                  {section}
+                </button>
+              ))}
+              <a
+                href="/recruitment"
+                className={`capitalize transition-colors ${
+                  activeSection === "recruitment"
+                    ? "text-accent-orange font-semibold"
+                    : "text-text-secondary hover:text-accent-orange"
+                }`}
+              >
+                Recruitment
+              </a>
+              <a
+                href="/podcasts"
+                className={`capitalize transition-colors ${
+                  activeSection === "podcasts"
+                    ? "text-accent-orange font-semibold"
+                    : "text-text-secondary hover:text-accent-orange"
+                }`}
+              >
+                Podcasts
+              </a>
+              <a
+                href="/events"
+                className={`capitalize transition-colors ${
+                  activeSection === "events"
+                    ? "text-accent-orange font-semibold"
+                    : "text-text-secondary hover:text-accent-orange"
+                }`}
+              >
+                Events
+              </a>
+            </div>
+
+            {/* Mobile menu button */}
+            <div className="md:hidden">
+              <button
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className="text-text-secondary hover:text-accent-orange"
+              >
+                {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile Navigation */}
+        {isMenuOpen && (
+          <div className="md:hidden bg-primary-bg border-t border-neutral-light">
+            <div className="px-2 pt-2 pb-3 space-y-1">
+              {["home", "about", "team"].map((section) => (
+                <button
+                  key={section}
+                  onClick={() => scrollToSection(section)}
+                  className="block px-3 py-2 text-base font-medium text-text-secondary hover:text-accent-orange capitalize w-full text-left"
+                >
+                  {section}
+                </button>
+              ))}
+              <a
+                href="/recruitment"
+                className="block px-3 py-2 text-base font-medium text-text-secondary hover:text-accent-orange capitalize w-full text-left"
+              >
+                Recruitment
+              </a>
+              <a
+                href="/podcasts"
+                className="block px-3 py-2 text-base font-medium text-text-secondary hover:text-accent-orange capitalize w-full text-left"
+              >
+                Podcasts
+              </a>
+              <a
+                href="/events"
+                className="block px-3 py-2 text-base font-medium text-text-secondary hover:text-accent-orange capitalize w-full text-left"
+              >
+                Events
+              </a>
+            </div>
+          </div>
+        )}
+      </nav>
+
+      {/* Hero Section */}
+      <section
+        id="home"
+        className="pt-16 min-h-screen flex items-center justify-center relative"
+      >
+        {/* Particles Background */}
+        <div className="absolute inset-0 pointer-events-none z-0">
+          <Particles
+            particleCount={8000}
+            particleSpread={15}
+            speed={0.05}
+            particleColors={["#FF6B00", "#FFFFFF", "#FF8C42", "#FFA500"]}
+            moveParticlesOnHover={true}
+            particleHoverFactor={0.5}
+            alphaParticles={true}
+            particleBaseSize={120}
+            sizeRandomness={0.8}
+            cameraDistance={25}
+            disableRotation={false}
+            className="w-full h-full"
+          />
+        </div>
+        
+        <div className="max-w-7xl mx-auto w-full px-2 sm:px-4 md:px-6 lg:px-8 py-10 sm:py-16 md:py-20 text-center relative z-10">
+          
+          <div className="space-y-8 sm:space-y-12 md:space-y-16">
+            <div className="space-y-6 sm:space-y-8 md:space-y-12">
+              <div>
+                <TypewriterEffect
+                  words={["Voice IT", "वॉइस इट", "വോയിസ് इट", "వాయిస్ ఇట్", "வாய்ஸ் இட்", "ವಾಯ್ಸ್ ಇಟ್"]}
+                  className="text-4xl sm:text-6xl md:text-7xl lg:text-10xl xl:text-[12rem] font-black text-accent-orange tracking-tight leading-none break-words"
+                  typingSpeed={200}
+                  deletingSpeed={150}
+                  delayBetweenWords={2000}
+                />
+                <ScrollFloat
+                  animationDuration={1}
+                  ease="back.inOut(2)"
+                  scrollStart="center bottom+=50%"
+                  scrollEnd="bottom bottom-=40%"
+                  stagger={0.03}
+                  containerClassName="text-2xl sm:text-4xl md:text-6xl lg:text-9xl xl:text-[11rem] font-black text-text-primary tracking-tight leading-none mb-[20px] break-words"
+                  scrollContainerRef={scrollContainerRef}
+                >
+                  <TypewriterEffect
+                    words={["Voice IT", "वॉइस आईटी", "வாய்ஸ் ஐடி", "వాయిస్ ఐటి", "വോയ്സ് ഐടി"]}
+                    className="text-2xl sm:text-4xl md:text-6xl lg:text-9xl xl:text-[11rem] font-black text-text-primary tracking-tight leading-none break-words"
+                    typingSpeed={200}
+                    deletingSpeed={150}
+                    delayBetweenWords={2000}
                   />
+                </ScrollFloat>
+                {/* 3D Radio Model */}
+                <div className="flex justify-center items-center">
+                  <div className="w-[28rem] h-[28rem] sm:w-[32rem] sm:h-[32rem] md:w-[36rem] md:h-[36rem] lg:w-[40rem] lg:h-[40rem] max-w-full max-h-[60vw] min-w-0 min-h-0">
+                    <Radio3D
+                      size={350}
+                      rotationSpeed={0.01}
+                      enableRotation={true}
+                      className="w-full h-full"
+                    />
+                  </div>
                 </div>
-              ))} />
+              </div>
+              <ScrollVelocity
+                texts={["Where voices come alive and stories find their rhythm."]}
+                velocity={30}
+                numCopies={20}
+                damping={60}
+                stiffness={300}
+                className="text-2xl sm:text-3xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-accent-orange via-accent-warm to-accent-orange text-center tracking-widest digital-board"
+              />
+              <ScrollVelocity
+                texts={["Join VIT Chennai's premier radio community."]}
+                velocity={-28}
+                numCopies={20}
+                damping={60}
+                stiffness={300}
+                className="text-lg sm:text-xl md:text-3xl font-bold text-accent-orange text-center tracking-widest digital-board"
+              />
+              <div className="flex justify-center">
+                <Button
+                  size="lg"
+                  className="bg-accent-orange hover:bg-accent-orange/90 text-white px-8 sm:px-12 py-4 sm:py-6 rounded-full font-black text-lg sm:text-2xl md:text-3xl lg:text-4xl transition-all hover:shadow-2xl hover:shadow-accent-orange/25 transform hover:scale-105"
+                  onClick={() => window.location.href = "/recruitment"}
+                >
+                  Join the Club
+                </Button>
+              </div>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-                <a
-                  href="https://www.linkedin.com/in/punya-mittal-a1122520b/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-accent hover:text-accent/80 font-medium transition-colors duration-200 inline-flex items-center gap-1"
-                >
-                  Punya Mittal
-                  <svg
-                    className="w-4 h-4"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                  >
-                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-                  </svg>
-                </a>
-                <span className="mx-1">and</span>
-                <a
-                  href="https://www.linkedin.com/in/hirendrabalaji/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-accent hover:text-accent/80 font-medium transition-colors duration-200 inline-flex items-center gap-1"
-                >
-                  Hirendra Balaji
-                  <svg
-                    className="w-4 h-4"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                  >
-                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-                  </svg>
-                </a>
+      {/* About Section */}
+      <section id="about" className="py-10 sm:py-16 md:py-20 bg-primary-bg/80 backdrop-blur-sm relative">
+        <div className="max-w-7xl mx-auto w-full px-2 sm:px-4 md:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <ScrollFloat
+              animationDuration={1}
+              ease="back.inOut(2)"
+              scrollStart="center bottom+=50%"
+              scrollEnd="bottom bottom-=40%"
+              stagger={0.03}
+              containerClassName="text-4xl font-bold text-text-primary"
+              scrollContainerRef={scrollContainerRef}
+            >
+              About Voice IT
+            </ScrollFloat>
+            <p className="text-xl text-text-secondary max-w-3xl mx-auto mt-4">
+              <VariableProximity
+                label="We're more than just a radio club – we're a community of storytellers, creators, and voice artists passionate about audio expression."
+                className="text-xl text-text-secondary"
+                fromFontVariationSettings="'wght' 400, 'opsz' 9"
+                toFontVariationSettings="'wght' 1000, 'opsz' 40"
+                containerRef={aboutTextRef as React.RefObject<HTMLElement>}
+                radius={100}
+                falloff="linear"
+              />
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+            <Card className="bg-primary-bg border-accent-orange hover:shadow-lg transition-all duration-300 hover:border-accent-orange/30">
+              <CardContent className="p-8 text-center">
+                <div className="h-[300px] w-full">
+                  <EvervaultCard text="Creative Expression" />
+                </div>
+                <h3 className="text-xl font-semibold text-text-primary mb-4">Creative Expression</h3>
+                <p className="text-text-secondary">
+                  Discover your unique voice through radio shows, podcasts, and live performances that showcase your
+                  creativity.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-primary-bg border-accent-orange hover:shadow-lg transition-all duration-300 hover:border-accent-orange/30">
+              <CardContent className="p-8 text-center">
+                <div className="h-[300px] w-full">
+                  <EvervaultCard text="Community" />
+                </div>
+                <h3 className="text-xl font-semibold text-text-primary mb-4">Community Building</h3>
+                <p className="text-text-secondary">
+                  Connect with like-minded individuals and build lasting friendships through shared passion for audio
+                  arts.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-primary-bg border-accent-orange hover:shadow-lg transition-all duration-300 hover:border-accent-orange/30">
+              <CardContent className="p-8 text-center">
+                <div className="h-[300px] w-full">
+                  <EvervaultCard text="Skills" />
+                </div>
+                <h3 className="text-xl font-semibold text-text-primary mb-4">Skill Development</h3>
+                <p className="text-text-secondary">
+                  Learn professional broadcasting techniques, audio editing, and public speaking in a supportive
+                  environment.
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Team Section */}
+      <section id="team" className="py-10 sm:py-16 md:py-20 bg-primary-bg/80 backdrop-blur-sm relative overflow-hidden">
+        <div className="max-w-7xl mx-auto w-full px-2 sm:px-4 md:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <ScrollFloat
+              animationDuration={0.5}
+              ease="back.inOut(2)"
+              scrollStart="center bottom+=50%"
+              scrollEnd="bottom bottom-=40%"
+              stagger={0.03}
+              containerClassName="text-4xl font-bold text-text-primary"
+              scrollContainerRef={scrollContainerRef}
+            >
+              Meet Our Team
+            </ScrollFloat>
+            <p className="text-xl text-text-secondary mt-4">
+              <VariableProximity
+                label="The voices behind Voice IT who make the magic happen"
+                className="text-xl text-text-secondary"
+                fromFontVariationSettings="'wght' 400, 'opsz' 9"
+                toFontVariationSettings="'wght' 1000, 'opsz' 40"
+                containerRef={teamTextRef as React.RefObject<HTMLElement>}
+                radius={100}
+                falloff="linear"
+              />
+            </p>
+          </div>
+
+          <div className="w-full h-full py-10 sm:py-16 md:py-20 overflow-x-auto">
+            <Carousel items={teamMembers.map((member, index) => (
+              <div key={member.image} className="px-2 min-w-0">
+                <TiltedCard
+                  imageSrc={member.image}
+                  altText="Team Member"
+                  containerHeight="400px"
+                  containerWidth="300px"
+                  imageHeight="400px"
+                  imageWidth="300px"
+                  displayOverlayContent={false}
+                  showTooltip={false}
+                  scaleOnHover={1.05}
+                  rotateAmplitude={10}
+                  showMobileWarning={false}
+                />
+              </div>
+            ))} />
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-primary-bg border-t border-neutral-light py-8">
+        <div className="container mx-auto w-full px-2 sm:px-4 md:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 md:gap-8">
+            <div>
+              <h3 className="text-xl font-bold mb-4">Voice IT</h3>
+              <p className="text-neutral-light">
+                The official RJ Club of VIT Chennai, bringing you the best in campus radio and entertainment.
               </p>
             </div>
+            <div>
+              <h3 className="text-xl font-bold mb-4">Quick Links</h3>
+              <ul className="space-y-2">
+                <li><a href="#home" className="text-neutral-light hover:text-accent transition-colors">Home</a></li>
+                <li><a href="#about" className="text-neutral-light hover:text-accent transition-colors">About</a></li>
+                <li><a href="#team" className="text-neutral-light hover:text-accent transition-colors">Team</a></li>
+                <li><a href="#contact" className="text-neutral-light hover:text-accent transition-colors">Contact</a></li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-xl font-bold mb-4">Connect</h3>
+              <ul className="space-y-2">
+                <li><a href="#" className="text-neutral-light hover:text-accent transition-colors">Instagram</a></li>
+                
+              
+                <li><a href="https://youtu.be/GV1CV79Gr4k" target="_blank" rel="noopener noreferrer" className="text-neutral-light hover:text-accent transition-colors">YouTube</a></li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-xl font-bold mb-4">Contact</h3>
+              <ul className="space-y-2">
+                <li className="text-neutral-light">VIT Chennai Campus</li>
+                <li className="text-neutral-light">Chennai, Tamil Nadu</li>
+                <li className="text-neutral-light">Email: voiceit.vitchennai@gmail.com</li>
+              </ul>
+            </div>
           </div>
-        </footer>
-      </div>
-    </>
+          <div className="mt-8 pt-8 border-t border-neutral-light text-center">
+            <p className="text-neutral-light">
+              © {new Date().getFullYear()} Voice IT. All rights reserved.
+            </p>
+            <p className="text-neutral-light mt-2">
+              Created and Designed by{" "}
+              <a
+                href="https://www.linkedin.com/in/punya-mittal-a1122520b/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-accent hover:text-accent/80 font-medium transition-colors duration-200 inline-flex items-center gap-1"
+              >
+                Punya Mittal
+                <svg
+                  className="w-4 h-4"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                </svg>
+              </a>
+              <span className="mx-1">and</span>
+              <a
+                href="https://www.linkedin.com/in/hirendrabalaji/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-accent hover:text-accent/80 font-medium transition-colors duration-200 inline-flex items-center gap-1"
+              >
+                Hirendra Balaji
+                <svg
+                  className="w-4 h-4"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                </svg>
+              </a>
+            </p>
+          </div>
+        </div>
+      </footer>
+    </div>
   )
 }
